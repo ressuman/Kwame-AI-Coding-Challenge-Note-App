@@ -1,14 +1,29 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "author": {
+    "email": "ressuman001@gmail.com",
+    "name": "Richard Essuman"
+  },
+  "description": "Notes API (Express + MongoDB, ES6)",
+  "keywords": [
+    "api",
+    "mongodb",
+    "javascript",
+    "notes",
+    "backend"
+  ],
+  "license": "ISC",
+  "main": "src/server.js",
+  "name": "notes-backend",
   "scripts": {
+    "dev": "nodemon --env-file .env src/server.js",
+    "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "type": "module",
+  "version": "1.0.0",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
@@ -17,8 +32,5 @@
     "mongoose": "^8.17.1",
     "morgan": "^1.10.1",
     "zod": "^4.0.17"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
   }
 }
