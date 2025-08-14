@@ -54,17 +54,19 @@ noteSchema.index(
 
 // Validate with Zod before saving
 noteSchema.pre("validate", function (next) {
-  const { error } = noteValidationSchema.safeParse(this);
-  if (error) {
-    next(
-      new mongoose.Error.ValidationError(this).addError("validation", {
-        message: error.errors.map((e) => e.message).join(", "),
+  const result = noteValidationSchema.safeParse(this.toObject());
+  if (!result.success) {
+    const validationError = new mongoose.Error.ValidationError(this);
+    validationError.addError(
+      "validation",
+      new mongoose.Error.ValidatorError({
+        message: result.error.errors.map((e) => e.message).join(", "),
       })
     );
-  } else {
-    next();
+    return next(validationError);
   }
+  next();
 });
 
 // Explicit collection name — match DB exactly
-export const Note = mongoose.model("Note", noteSchema, "Notes");
+export const Note = mongoose.model("Note", noteSchema, "notes");

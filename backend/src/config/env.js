@@ -24,8 +24,6 @@ const envNumber = (key, fallback) => {
   return parsed;
 };
 
-// const env = (key, fallback) => process.env[key] ?? fallback;
-
 /* The code snippet is defining an object named `config` that contains various properties initialized
 using the `env` and `envNumber` functions. Here's what each property is doing: */
 export const config = {
