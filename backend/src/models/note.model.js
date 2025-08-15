@@ -15,6 +15,7 @@ export const noteValidationSchema = z.object({
     .max(10000, "Body cannot exceed 10,000 characters"),
 });
 
+/* This code snippet is defining a Mongoose schema for a "Note" model. Let's break it down: */
 const noteSchema = new mongoose.Schema(
   {
     title: {
@@ -51,22 +52,6 @@ noteSchema.index(
     },
   }
 );
-
-// Validate with Zod before saving
-noteSchema.pre("validate", function (next) {
-  const result = noteValidationSchema.safeParse(this.toObject());
-  if (!result.success) {
-    const validationError = new mongoose.Error.ValidationError(this);
-    validationError.addError(
-      "validation",
-      new mongoose.Error.ValidatorError({
-        message: result.error.errors.map((e) => e.message).join(", "),
-      })
-    );
-    return next(validationError);
-  }
-  next();
-});
 
 // Explicit collection name — match DB exactly
 export const Note = mongoose.model("Note", noteSchema, "notes");
