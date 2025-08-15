@@ -17,7 +17,7 @@ export const apiDocumentation = {
   },
   servers: [
     {
-      url: "http://localhost:4550/api/v1",
+      url: "http://localhost:4550",
       description: "Local development server (port from .env PORT=4550).",
     },
     {

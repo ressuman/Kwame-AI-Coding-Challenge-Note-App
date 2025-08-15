@@ -12,15 +12,6 @@ async function main() {
   app.listen(config.port, () => {
     console.log(`🚀 Server running on http://localhost:${config.port}`);
   });
-
-  // Handle unhandled promise rejections
-  // process.on("unhandledRejection", (err) => {
-  //   console.log("UNHANDLED REJECTION! 💥 Shutting down...");
-  //   console.log(err.name, err.message);
-  //   app.close(() => {
-  //     process.exit(1);
-  //   });
-  // });
 }
 
 main();
