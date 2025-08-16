@@ -1,5 +1,6 @@
 import { Plus, Search } from "lucide-react";
 import type { NotesGridProps } from "../../types/note.types";
+import NoteCard from "./NoteCard";
 
 const NotesGrid: React.FC<NotesGridProps> = ({
   notes,
