@@ -137,8 +137,36 @@ const App: React.FC = () => {
         />
 
         {/* Footer */}
-        <footer className="mt-16 text-center text-gray-500 text-sm pb-8">
-          <p>Notes App - Built with React 19 & TypeScript & Tailwind CSS v4</p>
+        <footer className="mt-16 text-center text-gray-500 text-sm pb-8 space-y-1">
+          <p>
+            &copy; {new Date().getFullYear()} Richard Essuman — All rights
+            reserved.
+          </p>
+          <p>
+            Source code:
+            <a
+              href="https://github.com/ressuman/Kwame-AI-Coding-Challenge-Note-App.git"
+              className="text-blue-600 hover:underline ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Repo
+            </a>
+          </p>
+          <p>
+            Backend API:
+            <a
+              href="https://ressuman-kwame-ai-note-app-server.vercel.app/"
+              className="text-blue-600 hover:underline ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://ressuman-kwame-ai-note-app-server.vercel.app
+            </a>
+          </p>
+          <p className="text-xs text-gray-400">
+            Built with React, Tailwind CSS, Node.js, Express.js, and MongoDB
+          </p>
         </footer>
       </div>
 
