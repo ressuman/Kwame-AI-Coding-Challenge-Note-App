@@ -1,0 +1,7 @@
+{
+  "powermode.enabled": true,
+  "powermode.combo.counterSize": 1,
+  "powermode.combo.timeout": 2,
+  "powermode.combo.timerEnabled": "hide",
+  "powermode.explosions.customExplosions": []
+}
