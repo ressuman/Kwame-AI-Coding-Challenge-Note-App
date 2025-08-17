@@ -54,6 +54,28 @@ app.use(
   swaggerUi.setup(apiDocumentation, { explorer: true, customCssUrl: CSS_URL })
 );
 
+// Home route
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome to the Notes API backend 🎉",
+    about:
+      "This is a RESTful API for creating, listing, updating, and deleting notes.",
+    author: {
+      name: "Richard Essuman",
+      github:
+        "https://github.com/ressuman/Kwame-AI-Coding-Challenge-Note-App.git",
+    },
+    version: "1.0.0",
+    documentation: "/api/v1/api-docs",
+    routes: {
+      apiRoot: "/api",
+      notesBase: "/api/v1/notes",
+      healthCheck: "/api/v1/health",
+    },
+  });
+});
+
 // 404
 app.use((req, res) =>
   res.status(404).json({
