@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const { request, error, setError } = useApi();
 
   // Load notes on mount

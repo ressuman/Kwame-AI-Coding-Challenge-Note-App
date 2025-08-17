@@ -24,7 +24,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [isPending, startTransition] = useTransition();
-  const { request, error, setError } = useApi();
+  const { request, setError } = useApi();
 
   // Auto-save functionality with debounce for existing notes
   useEffect(() => {
