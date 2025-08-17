@@ -37,8 +37,6 @@ A complete note-taking application with React.js frontend and Express.js backend
     - [Backend](#backend-6)
     - [Frontend](#frontend-6)
   - [Contributing](#contributing)
-  - [License](#license)
-  - [Contact](#contact)
 
 ## Features
 
@@ -292,16 +290,3 @@ The backend provides comprehensive API documentation via Swagger UI at `http://l
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request for each repository
-
-## License
-
-Distributed under the MIT License. See `LICENSE` files in each repository for more information.
-
-## Contact
-
-Richard Essuman - [@yourtwitter](https://twitter.com/yourtwitter) - <ressuman001@gmail.com>
-
-Project Links:
-
-- Frontend: [https://github.com/your-username/notes-app-frontend](https://github.com/your-username/notes-app-frontend)
-- Backend: [https://github.com/your-username/notes-api](https://github.com/your-username/notes-api)
