@@ -17,7 +17,7 @@ export interface UpdateNoteRequest {
 }
 
 export interface NoteEditorProps {
-  note?: Note;
+  note?: Note | null;
   onSave: (note: Note) => void;
   onCancel: () => void;
   isNew?: boolean;

@@ -17,7 +17,7 @@ import { TOAST_CONFIG } from "./utils/constants";
 
 const App: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [optimisticNotes, addOptimisticNote] = useOptimistic(
+  const [optimisticNotes] = useOptimistic(
     notes,
     (state: Note[], newNote: Note) => [...state, newNote]
   );
@@ -25,8 +25,8 @@ const App: React.FC = () => {
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [isPending, startTransition] = useTransition();
-  const { request, loading, error, setError } = useApi();
+  const [startTransition] = useTransition();
+  const { request, error, setError } = useApi();
 
   // Load notes on mount
   useEffect(() => {
