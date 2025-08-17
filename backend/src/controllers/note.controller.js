@@ -52,5 +52,5 @@ export const remove = asyncHandler(async (req, res) => {
 
   if (!item) return successResponse(res, "Note not found", null, 404);
 
-  successResponse(res, "Note deleted successfully", null, 204);
+  successResponse(res, "Note deleted successfully", null, 200);
 });
