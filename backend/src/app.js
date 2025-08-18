@@ -22,7 +22,35 @@ const __dirname = path.dirname(__filename);
 // Security & basics
 // app.use(helmet());
 // / Configure helmet with proper CSP for Swagger UI v5.0.1
-app.use(
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         styleSrc: ["'self'", "'unsafe-inline'", "blob:"],
+//         scriptSrc: [
+//           "'self'",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           "blob:",
+//           "https://vercel.live", // Allow Vercel's scripts
+//         ],
+//         imgSrc: ["'self'", "data:", "https:"],
+//         fontSrc: ["'self'", "https:", "data:"],
+//         connectSrc: ["'self'", "https:"],
+//         objectSrc: ["'none'"],
+//         mediaSrc: ["'self'"],
+//         frameSrc: ["'none'"],
+//       },
+//     },
+//   })
+// );
+// Configure helmet with relaxed CSP for Swagger UI to work properly
+app.use((req, res, next) => {
+  // Disable CSP completely for swagger docs to avoid conflicts
+  if (req.path.startsWith("/api/v1/api-docs")) {
+    return next();
+  }
   helmet({
     contentSecurityPolicy: {
       directives: {
@@ -33,7 +61,7 @@ app.use(
           "'unsafe-inline'",
           "'unsafe-eval'",
           "blob:",
-          "https://vercel.live", // Allow Vercel's scripts
+          "https://vercel.live",
         ],
         imgSrc: ["'self'", "data:", "https:"],
         fontSrc: ["'self'", "https:", "data:"],
@@ -43,24 +71,24 @@ app.use(
         frameSrc: ["'none'"],
       },
     },
-  })
-);
+  })(req, res, next);
+});
 app.use(cors({ origin: config.corsOrigin, credentials: true }));
 app.use(express.json({ limit: "1mb" }));
 
-// Explicitly serve swagger-ui static files with correct MIME types
-app.use(
-  "/api/v1/api-docs",
-  express.static(path.join(__dirname, "../node_modules/swagger-ui-dist"), {
-    setHeaders: (res, filePath) => {
-      if (filePath.endsWith(".css")) {
-        res.setHeader("Content-Type", "text/css");
-      } else if (filePath.endsWith(".js")) {
-        res.setHeader("Content-Type", "application/javascript");
-      }
-    },
-  })
-);
+// // Explicitly serve swagger-ui static files with correct MIME types
+// app.use(
+//   "/api/v1/api-docs",
+//   express.static(path.join(__dirname, "../node_modules/swagger-ui-dist"), {
+//     setHeaders: (res, filePath) => {
+//       if (filePath.endsWith(".css")) {
+//         res.setHeader("Content-Type", "text/css");
+//       } else if (filePath.endsWith(".js")) {
+//         res.setHeader("Content-Type", "application/javascript");
+//       }
+//     },
+//   })
+// );
 
 // Logging
 morgan.token("id", (req) => req.id);
@@ -138,9 +166,13 @@ const swaggerOptions = {
 };
 
 // Mount swagger ui AFTER static file serving
-app.use("/api/v1/api-docs", swaggerUi.serve);
+// app.use("/api/v1/api-docs", swaggerUi.serve);
 
-app.get("/api/v1/api-docs", swaggerUi.setup(apiDocumentation, swaggerOptions));
+app.use(
+  "/api/v1/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(apiDocumentation, swaggerOptions)
+);
 
 // Home route
 app.get("/", (req, res) => {
@@ -183,6 +215,7 @@ app.get("/", (req, res) => {
 //   })
 // );
 // 404 - Make sure this doesn't interfere with swagger static files
+// 404 - Make sure this doesn't interfere with swagger static files
 app.use((req, res) => {
   // Don't send 404 for swagger static files
   if (
@@ -210,7 +243,6 @@ app.use((req, res) => {
     ],
   });
 });
-
 // Error handler
 app.use(errorHandler);
 
