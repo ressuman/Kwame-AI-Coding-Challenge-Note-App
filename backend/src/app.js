@@ -2,9 +2,7 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import path from "path";
 import swaggerUi from "swagger-ui-express";
-import { fileURLToPath } from "url";
 import { config } from "./config/env.js";
 import { apiDocumentation } from "./docs/api.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -13,8 +11,8 @@ import { reqId } from "./utils/logger.js";
 
 const app = express();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // const CSS_URL =
 //   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
@@ -46,32 +44,41 @@ const __dirname = path.dirname(__filename);
 //   })
 // );
 // Configure helmet with relaxed CSP for Swagger UI to work properly
+// app.use((req, res, next) => {
+//   // Disable CSP completely for swagger docs to avoid conflicts
+//   if (req.path.startsWith("/api/v1/api-docs")) {
+//     return next();
+//   }
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         styleSrc: ["'self'", "'unsafe-inline'", "blob:"],
+//         scriptSrc: [
+//           "'self'",
+//           "'unsafe-inline'",
+//           "'unsafe-eval'",
+//           "blob:",
+//           "https://vercel.live",
+//         ],
+//         imgSrc: ["'self'", "data:", "https:"],
+//         fontSrc: ["'self'", "https:", "data:"],
+//         connectSrc: ["'self'", "https:"],
+//         objectSrc: ["'none'"],
+//         mediaSrc: ["'self'"],
+//         frameSrc: ["'none'"],
+//       },
+//     },
+//   })(req, res, next);
+// });
+// Disable helmet for swagger routes, apply it selectively
 app.use((req, res, next) => {
-  // Disable CSP completely for swagger docs to avoid conflicts
   if (req.path.startsWith("/api/v1/api-docs")) {
+    // No security headers for swagger UI to avoid conflicts
     return next();
   }
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "blob:"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          "blob:",
-          "https://vercel.live",
-        ],
-        imgSrc: ["'self'", "data:", "https:"],
-        fontSrc: ["'self'", "https:", "data:"],
-        connectSrc: ["'self'", "https:"],
-        objectSrc: ["'none'"],
-        mediaSrc: ["'self'"],
-        frameSrc: ["'none'"],
-      },
-    },
-  })(req, res, next);
+  // Apply helmet to all other routes
+  helmet()(req, res, next);
 });
 app.use(cors({ origin: config.corsOrigin, credentials: true }));
 app.use(express.json({ limit: "1mb" }));
