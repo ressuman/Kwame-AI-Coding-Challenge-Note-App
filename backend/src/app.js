@@ -47,6 +47,12 @@ app.get("/api", (req, res) => {
   });
 });
 
+// Disable CSP for Swagger UI routes only
+// app.use("/api/v1/api-docs", (req, res, next) => {
+//   res.removeHeader("Content-Security-Policy");
+//   next();
+// });
+
 // Mount swagger ui at /api-docs
 // app.use(
 //   "/api/v1/api-docs",
