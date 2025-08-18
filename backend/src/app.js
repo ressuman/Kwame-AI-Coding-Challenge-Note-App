@@ -1,6 +1,5 @@
 import cors from "cors";
 import express from "express";
-import helmet from "helmet";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { config } from "./config/env.js";
@@ -72,14 +71,21 @@ const app = express();
 //   })(req, res, next);
 // });
 // Disable helmet for swagger routes, apply it selectively
-app.use((req, res, next) => {
-  if (req.path.startsWith("/api/v1/api-docs")) {
-    // No security headers for swagger UI to avoid conflicts
-    return next();
-  }
-  // Apply helmet to all other routes
-  helmet()(req, res, next);
-});
+// app.use((req, res, next) => {
+//   if (req.path.startsWith("/api/v1/api-docs")) {
+//     // No security headers for swagger UI to avoid conflicts
+//     return next();
+//   }
+//   // Apply helmet to all other routes
+//   helmet()(req, res, next);
+// });
+// if (process.env.VERCEL) {
+//   // No helmet on Vercel to avoid conflicts
+//   console.log("Running on Vercel - Helmet disabled for Swagger compatibility");
+// } else {
+//   app.use(helmet());
+// }
+
 app.use(cors({ origin: config.corsOrigin, credentials: true }));
 app.use(express.json({ limit: "1mb" }));
 
@@ -171,7 +177,22 @@ const swaggerOptions = {
   customCssUrl: null, // Use built-in CSS
   customJs: null, // Use built-in JS
 };
-
+// const swaggerOptions = {
+//   explorer: true,
+//   customSiteTitle: "Notes API Documentation",
+//   customCssUrl:
+//     "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.1/swagger-ui.css",
+//   customJs: [
+//     "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.1/swagger-ui-bundle.js",
+//     "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.1/swagger-ui-standalone-preset.js",
+//   ],
+//   swaggerOptions: {
+//     dom_id: "#swagger-ui",
+//     deepLinking: true,
+//     presets: ["SwaggerUIBundle.presets.apis", "SwaggerUIStandalonePreset"],
+//     layout: "StandaloneLayout",
+//   },
+// };
 // Mount swagger ui AFTER static file serving
 // app.use("/api/v1/api-docs", swaggerUi.serve);
 
