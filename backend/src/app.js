@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import helmet from "helmet";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { config } from "./config/env.js";
@@ -13,8 +14,8 @@ const app = express();
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
-// const CSS_URL =
-//   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 // Security & basics
 // app.use(helmet());
@@ -85,7 +86,7 @@ const app = express();
 // } else {
 //   app.use(helmet());
 // }
-
+app.use(helmet());
 app.use(cors({ origin: config.corsOrigin, credentials: true }));
 app.use(express.json({ limit: "1mb" }));
 
@@ -199,7 +200,11 @@ const swaggerOptions = {
 app.use(
   "/api/v1/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(apiDocumentation, swaggerOptions)
+  swaggerUi.setup(apiDocumentation, {
+    customCss:
+      ".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
+    customCssUrl: CSS_URL,
+  })
 );
 
 // Home route
