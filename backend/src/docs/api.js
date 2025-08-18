@@ -21,7 +21,7 @@ export const apiDocumentation = {
       description: "Local development server (port from .env PORT=4550).",
     },
     {
-      url: "YOUR_PRODUCTION_URL/api/v1", // Update with your hosted URL
+      url: "https://ressuman-kwame-ai-note-app-server.vercel.app/",
       description: "Production server",
     },
   ],
