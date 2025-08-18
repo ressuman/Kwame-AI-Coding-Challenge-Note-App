@@ -11,8 +11,8 @@ import { reqId } from "./utils/logger.js";
 
 const app = express();
 
-const CSS_URL =
-  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
+// const CSS_URL =
+//   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 // Security & basics
 app.use(helmet());
@@ -48,10 +48,26 @@ app.get("/api", (req, res) => {
 });
 
 // Mount swagger ui at /api-docs
+// app.use(
+//   "/api/v1/api-docs",
+//   swaggerUi.serve,
+//   swaggerUi.setup(apiDocumentation, { explorer: true, customCssUrl: CSS_URL })
+// );
 app.use(
   "/api/v1/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(apiDocumentation, { explorer: true, customCssUrl: CSS_URL })
+  swaggerUi.setup(apiDocumentation, {
+    explorer: true,
+    customSiteTitle: "Notes API Documentation",
+    swaggerOptions: {
+      persistAuthorization: true,
+      displayRequestDuration: true,
+      docExpansion: "none",
+      filter: true,
+      showExtensions: true,
+      showCommonExtensions: true,
+    },
+  })
 );
 
 // Home route
